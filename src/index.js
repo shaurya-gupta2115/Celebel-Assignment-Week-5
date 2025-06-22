@@ -2,15 +2,20 @@
 
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const main = require("./config/db");
+
 require("dotenv").config();
-
-const main = require("./config/db")
-
+const app = express()
 
 // Middleware
-app.use(cors());
 app.use(express.json());
+app.use(cookieParser()); // ✅ Add this before routes
+
+// routing 
+const projectRouter = require("./routes/projectRoutes");
+
+app.use("/projectDoc", projectRouter)
 
 const InitalizeConnection = async () => {
   try {
